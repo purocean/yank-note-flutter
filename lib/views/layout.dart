@@ -1,10 +1,11 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:yank_note/views/file_tree.dart';
 
-List views = [
+List _views = [
   CupertinoPageScaffold(
     child: Center(
-      child: const Text('文件'),
+      child: FileTree()
     ),
   ),
   CupertinoPageScaffold(
@@ -39,7 +40,7 @@ class _Layout extends State<Layout> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoTabView(
           builder: (BuildContext context) {
-            return views[index];
+            return _views[index];
           },
         );
       },
