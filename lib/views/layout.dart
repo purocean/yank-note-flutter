@@ -1,13 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:yank_note/views/file_tree.dart';
+import 'package:yank_note/views/browser.dart';
 
 List _views = [
-  CupertinoPageScaffold(
-    child: Center(
-      child: FileTree()
-    ),
-  ),
+  Borowser(),
   CupertinoPageScaffold(
     child: Center(
       child: const Text('编辑'),
@@ -32,7 +28,7 @@ class _Layout extends State<Layout> {
       tabBar: CupertinoTabBar(
         border: null,
         items: const <BottomNavigationBarItem> [
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.doc_on_doc)),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.folder)),
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.pencil_circle)),
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.eye)),
         ],

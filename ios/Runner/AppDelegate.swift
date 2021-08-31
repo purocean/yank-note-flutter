@@ -19,7 +19,7 @@ import UniformTypeIdentifiers
   }
 
   public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-    self.result?(url.absoluteString)
+    self.result?(url.path)
     // DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
     // }
 
