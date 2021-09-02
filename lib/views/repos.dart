@@ -6,12 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:yank_note/helper.dart';
+import 'package:yank_note/store.dart';
 import 'package:yank_note/widgets/input_dialog.dart';
 
 class Repos extends StatefulWidget {
   @override
   State<StatefulWidget> createState () => _Repos();
-
 }
 
 class _Repos extends State<Repos> {
@@ -37,9 +37,12 @@ class _Repos extends State<Repos> {
 
     if (data.length > 0) {
       return Center(child:
-        CupertinoButton(child: Text('添加仓库'), onPressed: () {
-          _pickFloder(ctx);
-        }),
+        AppStoreConnector(builder: (context, store) {
+          return CupertinoButton(child: Text('添加仓库${store.state.test}'), onPressed: () {
+            store.dispatch(StoreActions.Increment);
+            // _pickFloder(ctx);
+          });
+        })
       );
     }
 
