@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'repo.dart';
+import 'repository.dart';
 
 part 'app_state.g.dart';
 
