@@ -16,12 +16,7 @@ List _views = [
   ),
 ];
 
-class Layout extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _Layout();
-}
-
-class _Layout extends State<Layout> {
+class Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(

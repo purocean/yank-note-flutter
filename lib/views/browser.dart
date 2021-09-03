@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:yank_note/views/files.dart';
 import 'package:yank_note/views/repos.dart';
 
-class Borowser extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _Borowser();
-}
-
-class _Borowser extends State<Borowser> {
+class Borowser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -16,7 +12,9 @@ class _Borowser extends State<Borowser> {
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case '/repos':
-              return CupertinoPageRoute(builder: (BuildContext ctx) => Repos());
+              return CupertinoPageRoute(builder: (context) => Repos());
+            case '/files':
+              return CupertinoPageRoute(builder: (context) => Files());
             default:
               return null;
           }

@@ -9,12 +9,7 @@ import 'package:yank_note/store/actions.dart';
 import 'package:yank_note/store/store.dart';
 import 'package:yank_note/widgets/input_dialog.dart';
 
-class Repos extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState () => _Repos();
-}
-
-class _Repos extends State<Repos> {
+class Repos extends StatelessWidget {
   _addRepo(BuildContext context) async {
     String path;
     try {
@@ -94,7 +89,6 @@ class _Repos extends State<Repos> {
                     ),
                   ],
                   child: Container(
-                    // height: 80,
                     width: double.infinity,
                     decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 0.5, color: CupertinoColors.separator))),
                     child: ListTile(
@@ -106,7 +100,7 @@ class _Repos extends State<Repos> {
                       ),
                       focusColor: Colors.red,
                       onTap: () {
-
+                        Navigator.pushNamed(context, '/files');
                       },
                     ),
                   ),
