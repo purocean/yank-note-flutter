@@ -29,7 +29,7 @@ class _InputDialog extends State<InputDialog> {
         if (widget.desc != null) Text(widget.desc!),
         CupertinoTextField(placeholder: '仓库名', onChanged: (str) {
           setState(() {
-            text = str;
+            text = str.trim();
           });
         }),
       ]),

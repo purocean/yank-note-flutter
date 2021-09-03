@@ -1,13 +1,12 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:yank_note/store.dart';
 import 'package:yank_note/views/browser.dart';
 
 List _views = [
   Borowser(),
   CupertinoPageScaffold(
     child: Center(
-      child: AppStoreConnector(builder: (ctx, x) =>  Text('编辑${x.state.test}')),
+      child: Text('编辑'),
     ),
   ),
   CupertinoPageScaffold(
