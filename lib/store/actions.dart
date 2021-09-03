@@ -1,9 +1,16 @@
 import 'package:yank_note/models/repository.dart';
 
-class ActionAddRepo {
+class ActionCreateRepo {
   final Repo item;
 
-  ActionAddRepo(this.item);
+  ActionCreateRepo(this.item);
+}
+
+class ActionRenameRepo {
+  final Repo item;
+  final String newName;
+
+  ActionRenameRepo(this.item, this.newName);
 }
 
 class ActionRemoveRepo {

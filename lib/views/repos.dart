@@ -15,7 +15,7 @@ class Repos extends StatefulWidget {
 }
 
 class _Repos extends State<Repos> {
-  Future<Null> addRepo(BuildContext context) async {
+  _addRepo(BuildContext context) async {
     String path;
     try {
       path = await Helper.platform.invokeMethod('pick-folder');
@@ -30,18 +30,28 @@ class _Repos extends State<Repos> {
       defaultValue: basename(path)
     );
     if (name != null) {
-      (await getStore()).dispatch(ActionAddRepo(Repo(name: name, path: path)));
+      (await getStore()).dispatch(ActionCreateRepo(Repo(name: name, path: path)));
     }
+  }
 
-    // final file = File(path.replaceFirst("file://", "") + '/test.txt');
-    // final x = file.readAsStringSync();
+  _renameRepo(BuildContext context, Repo repo) async {
+    final name = await showInputDialog(
+      context,
+      title: '修改仓库名',
+      desc: '请输入新名字',
+      defaultValue: basename(repo.name)
+    );
+
+    if (name != null) {
+      (await getStore()).dispatch(ActionRenameRepo(repo, name));
+    }
   }
 
   Widget _buildRepos (BuildContext context) {
     return AppStoreConnector(builder: (context, store) {
       if (store.state.repos.length < 1) {
         return Center(child: CupertinoButton(child: Text('添加仓库'), onPressed: () {
-          addRepo(context);
+          _addRepo(context);
         }));
       }
 
@@ -66,13 +76,13 @@ class _Repos extends State<Repos> {
               ),
               child: Column(
                 children: store.state.repos.map((repo) => Slidable(
-                  key: Key(repo.name),
                   actionPane: SlidableDrawerActionPane(),
                   secondaryActions: [
                     IconSlideAction(
                       color: CupertinoColors.systemGrey,
                       icon: CupertinoIcons.ellipsis,
                       onTap: () => {
+                        _renameRepo(context, repo)
                       },
                     ),
                     IconSlideAction(
@@ -90,8 +100,9 @@ class _Repos extends State<Repos> {
                     child: ListTile(
                       dense: true,
                       leading: Icon(CupertinoIcons.tray, color: CupertinoColors.link),
+                      trailing: Icon(CupertinoIcons.right_chevron),
                       title: Container(
-                        child: Text(repo.name),
+                        child: Text(repo.name, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.bold),),
                       ),
                       focusColor: Colors.red,
                       onTap: () {
@@ -117,7 +128,7 @@ class _Repos extends State<Repos> {
             largeTitle: Text('浏览'),
             backgroundColor: CupertinoColors.secondarySystemBackground.withOpacity(0.5),
             trailing: GestureDetector(onTap: () {
-              addRepo(context);
+              _addRepo(context);
             }, child: Icon(CupertinoIcons.add_circled))
           )
         ];
