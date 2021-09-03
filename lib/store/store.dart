@@ -12,10 +12,18 @@ class Repo {
   final String path;
 
   Repo({required this.name, required this.path});
+
+  @override
+  int get hashCode => name.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other is Repo && other.name == name;
+  }
 }
 
 class AppState {
-  var repos = List<Repo>.empty();
+  var repos = List<Repo>.empty(growable: true);
 }
 
 final Map<StoreActions, AppState Function(AppState state, dynamic payload)> _reducers = {

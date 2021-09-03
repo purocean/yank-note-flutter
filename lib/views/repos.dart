@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +13,7 @@ class Repos extends StatefulWidget {
 }
 
 class _Repos extends State<Repos> {
-  Future<Null> _pickFloder(BuildContext ctx) async {
+  Future<Null> addRepo(BuildContext context) async {
     String path;
     try {
       path = await Helper.platform.invokeMethod('pick-folder');
@@ -23,7 +21,7 @@ class _Repos extends State<Repos> {
       path = "Failed to get battery level: '${e.message}'.";
     }
 
-    final name = await showInputDialog(ctx, title: '添加仓库', desc: '请输入仓库名');
+    final name = await showInputDialog(context, title: '添加仓库', desc: '请输入仓库名');
     if (name != null) {
       getStore().dispatch(ActionAddRepo(Repo(name: name, path: path)));
     }
@@ -32,11 +30,11 @@ class _Repos extends State<Repos> {
     // final x = file.readAsStringSync();
   }
 
-  Widget _buildRepos (BuildContext ctx) {
+  Widget _buildRepos (BuildContext context) {
     return AppStoreConnector(builder: (context, store) {
       if (store.state.repos.length < 1) {
         return Center(child: CupertinoButton(child: Text('添加仓库'), onPressed: () {
-          _pickFloder(ctx);
+          addRepo(context);
         }));
       }
 
@@ -101,24 +99,26 @@ class _Repos extends State<Repos> {
   }
 
   @override
-  Widget build(BuildContext ctx) {
+  Widget build(BuildContext context) {
     return Container(color: CupertinoColors.secondarySystemBackground, child: NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return [
           CupertinoSliverNavigationBar(
             largeTitle: Text('浏览'),
             backgroundColor: CupertinoColors.secondarySystemBackground.withOpacity(0.5),
-            trailing: GestureDetector(onTap: () {  }, child: Icon(CupertinoIcons.ellipsis_circle))
+            trailing: GestureDetector(onTap: () {
+              addRepo(context);
+            }, child: Icon(CupertinoIcons.add_circled))
           )
         ];
       },
       body: Column(children: [
         Container(
-          height: MediaQuery.of(ctx).size.height,
+          height: MediaQuery.of(context).size.height,
           child: ListView(
             children: [
               Column(
-                children: [ _buildRepos(ctx) ],
+                children: [ _buildRepos(context) ],
               )
             ]
           )

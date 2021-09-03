@@ -6,7 +6,7 @@ import 'package:yank_note/store/store.dart';
 final reducer = combineReducers<AppState>([
   TypedReducer<AppState, ActionAddRepo>((state, action) {
     if (!state.repos.contains(action.item)) {
-      state.repos = [action.item];
+      state.repos.add(action.item);
     } else {
       Fluttertoast.showToast(msg: '已添加同名仓库');
     }
