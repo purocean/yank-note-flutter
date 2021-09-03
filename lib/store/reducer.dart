@@ -13,4 +13,9 @@ final reducer = combineReducers<AppState>([
 
     return state;
   }),
+
+  TypedReducer<AppState, ActionRemoveRepo>((state, action) {
+    state.repos.remove(action.item);
+    return state;
+  })
 ]);

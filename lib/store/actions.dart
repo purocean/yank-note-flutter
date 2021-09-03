@@ -5,3 +5,9 @@ class ActionAddRepo {
 
   ActionAddRepo(this.item);
 }
+
+class ActionRemoveRepo {
+  final Repo item;
+
+  ActionRemoveRepo(this.item);
+}

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:path/path.dart';
 import 'package:yank_note/helper.dart';
 import 'package:yank_note/models/repository.dart';
 import 'package:yank_note/store/actions.dart';
@@ -22,7 +23,12 @@ class _Repos extends State<Repos> {
       path = "Failed to get battery level: '${e.message}'.";
     }
 
-    final name = await showInputDialog(context, title: '添加仓库', desc: '请输入仓库名');
+    final name = await showInputDialog(
+      context,
+      title: '添加仓库',
+      desc: '请输入仓库名',
+      defaultValue: basename(path)
+    );
     if (name != null) {
       (await getStore()).dispatch(ActionAddRepo(Repo(name: name, path: path)));
     }
@@ -66,12 +72,15 @@ class _Repos extends State<Repos> {
                     IconSlideAction(
                       color: CupertinoColors.systemGrey,
                       icon: CupertinoIcons.ellipsis,
-                      onTap: () => {},
+                      onTap: () => {
+                      },
                     ),
                     IconSlideAction(
                       color: CupertinoColors.systemRed,
                       icon: CupertinoIcons.delete,
-                      onTap: () => {},
+                      onTap: () => {
+                        store.dispatch(ActionRemoveRepo(repo))
+                      },
                     ),
                   ],
                   child: Container(

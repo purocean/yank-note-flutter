@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 class InputDialog extends StatefulWidget {
   final String title;
   final String? desc;
+  final String? defaultValue;
   final void Function(String value) onOk;
   final void Function() onCancel;
 
@@ -10,6 +11,7 @@ class InputDialog extends StatefulWidget {
     Key? key,
     required this.title,
     this.desc,
+    this.defaultValue,
     required this.onOk,
     required this.onCancel,
   }): super(key: key);
@@ -19,19 +21,37 @@ class InputDialog extends StatefulWidget {
 }
 
 class _InputDialog extends State<InputDialog> {
-  var text = '';
+  String text = '';
+  late TextEditingController _textController;
+
+  @override
+  void initState() {
+    super.initState();
+    text = widget.defaultValue ?? '';
+    _textController = TextEditingController(text: text);
+    _textController.selection = TextSelection(baseOffset: 0, extentOffset: _textController.text.length);
+  }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
       title: Text(widget.title),
       content: Column(children: [
-        if (widget.desc != null) Text(widget.desc!),
-        CupertinoTextField(placeholder: '仓库名', onChanged: (str) {
-          setState(() {
-            text = str.trim();
-          });
-        }),
+        if (widget.desc != null) Container(
+          padding: EdgeInsets.only(bottom: 10),
+          child: Text(widget.desc!),
+        ),
+        CupertinoTextField(
+          placeholder: '仓库名',
+          maxLength: 20,
+          controller: _textController,
+          autofocus: true,
+          onChanged: (str) {
+            setState(() {
+              text = str.trim();
+            });
+          }
+        ),
       ]),
       actions: [
         CupertinoDialogAction(child: Text('取消'), onPressed: () {
@@ -45,15 +65,21 @@ class _InputDialog extends State<InputDialog> {
   }
 }
 
-Future<String?> showInputDialog(BuildContext context, { required String title, String? desc }) {
-  return showCupertinoDialog<String?>(context: context, builder: (ctx) => InputDialog(
+Future<String?> showInputDialog(
+    BuildContext context, {
+      required String title,
+      String? desc,
+      String? defaultValue
+    }) {
+  return showCupertinoDialog<String?>(context: context, builder: (context) => InputDialog(
     title: title,
     desc: desc,
+    defaultValue: defaultValue,
     onOk: (String value) {
-      Navigator.pop(ctx, value);
+      Navigator.pop(context, value);
     },
     onCancel: () {
-      Navigator.pop(ctx, null);
+      Navigator.pop(context, null);
     }
   ));
 }
