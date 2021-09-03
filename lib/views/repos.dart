@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:yank_note/helper.dart';
+import 'package:yank_note/models/repo.dart';
 import 'package:yank_note/store/actions.dart';
 import 'package:yank_note/store/store.dart';
 import 'package:yank_note/widgets/input_dialog.dart';
@@ -23,7 +24,7 @@ class _Repos extends State<Repos> {
 
     final name = await showInputDialog(context, title: '添加仓库', desc: '请输入仓库名');
     if (name != null) {
-      getStore().dispatch(ActionAddRepo(Repo(name: name, path: path)));
+      (await getStore()).dispatch(ActionAddRepo(Repo(name: name, path: path)));
     }
 
     // final file = File(path.replaceFirst("file://", "") + '/test.txt');

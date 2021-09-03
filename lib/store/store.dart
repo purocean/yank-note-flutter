@@ -1,41 +1,34 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux_persist/redux_persist.dart';
+import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 import 'package:redux/redux.dart';
+import 'package:yank_note/models/app_state.dart';
 import 'package:yank_note/store/reducer.dart';
 
-enum StoreActions {
-  AddRepo
-}
+Store<AppState>? _store;
 
-class Repo {
-  final String name;
-  final String path;
-
-  Repo({required this.name, required this.path});
-
-  @override
-  int get hashCode => name.hashCode;
-
-  @override
-  bool operator ==(Object other) {
-    return other is Repo && other.name == name;
+Future<Store<AppState>> getStore () async {
+  if (_store != null) {
+    return _store!;
   }
+
+  final persistor = Persistor<AppState>(
+    debug: true,
+    storage: FlutterStorage(),
+    serializer: JsonSerializer<AppState>(AppState.fromJson),
+  );
+
+  final initialState = await persistor.load();
+
+  _store = Store<AppState>(
+    reducer,
+    initialState: initialState ?? AppState(),
+    middleware: [persistor.createMiddleware()]
+  );
+
+  return _store!;
 }
-
-class AppState {
-  var repos = List<Repo>.empty(growable: true);
-}
-
-final Map<StoreActions, AppState Function(AppState state, dynamic payload)> _reducers = {
-  StoreActions.AddRepo: (state, payload) {
-    state.repos.add(payload);
-    return state;
-  }
-};
-
-final _store =  Store<AppState>(reducer, initialState: AppState());
-
-Store<AppState> getStore () => _store;
 
 class AppStoreConnector extends StoreConnector<AppState, Store<AppState>> {
   AppStoreConnector({

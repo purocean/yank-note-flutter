@@ -17,7 +17,6 @@ class _Borowser extends State<Borowser> {
           switch (settings.name) {
             case '/repos':
               return CupertinoPageRoute(builder: (BuildContext ctx) => Repos());
-              break;
             default:
               return null;
           }

@@ -1,7 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redux/redux.dart';
+import 'package:yank_note/models/app_state.dart';
 import 'package:yank_note/store/actions.dart';
-import 'package:yank_note/store/store.dart';
 
 final reducer = combineReducers<AppState>([
   TypedReducer<AppState, ActionAddRepo>((state, action) {
