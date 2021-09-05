@@ -14,7 +14,7 @@ class Borowser extends StatelessWidget {
             case '/repos':
               return CupertinoPageRoute(builder: (context) => Repos());
             case '/files':
-              return CupertinoPageRoute(builder: (context) => Files());
+              return CupertinoPageRoute(builder: (context) => Files(arguments: settings.arguments as Map));
             default:
               return null;
           }

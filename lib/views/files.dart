@@ -1,38 +1,44 @@
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:yank_note/support/files.dart';
 
 class Files extends StatelessWidget {
 
+  late final String name;
+  late final String path;
+  late final List<FileSystemEntity> list;
+
+  Files({Key? key, required Map arguments }) : super(key: key) {
+    this.name = arguments['name'];
+    this.path = arguments['path'];
+    list = listFiles(path);
+  }
+
   Widget _buildFiles (BuildContext context) {
-    return Center(child: Text('xxx'));
+    return Container(
+      child: Column(children: list.map((e) => ListTile(title: Text(basename(e.path)))).toList())
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: CupertinoColors.secondarySystemBackground, child: NestedScrollView(
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return [
-          CupertinoSliverNavigationBar(
-            largeTitle: Text('文件'),
-            backgroundColor: CupertinoColors.secondarySystemBackground.withOpacity(0.5),
-            trailing: GestureDetector(onTap: () {
-              // TODO
-            }, child: Icon(CupertinoIcons.add_circled))
-          )
-        ];
-      },
-      body: Column(children: [
-        Container(
-          height: MediaQuery.of(context).size.height,
-          child: ListView(
-            children: [
-              Column(
-                children: [ _buildFiles(context) ],
-              )
-            ]
-          )
-        )
-      ]),
-    ));
+    return Container(color: CupertinoColors.secondarySystemBackground, child: CustomScrollView(
+      slivers: [
+        CupertinoSliverNavigationBar(
+          largeTitle: Text(name),
+          backgroundColor: CupertinoColors.secondarySystemBackground.withOpacity(0.5),
+          trailing: GestureDetector(onTap: () {
+            // TODO
+          }, child: Icon(CupertinoIcons.add_circled))
+        ),
+        SliverList(delegate: SliverChildListDelegate([
+          _buildFiles(context)
+        ]))
+      ]
+      ),
+    );
   }
 }

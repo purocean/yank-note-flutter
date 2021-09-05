@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path/path.dart';
-import 'package:yank_note/helper.dart';
+import 'package:yank_note/support/helper.dart';
 import 'package:yank_note/models/repository.dart';
 import 'package:yank_note/store/actions.dart';
 import 'package:yank_note/store/store.dart';
@@ -40,6 +40,13 @@ class Repos extends StatelessWidget {
     if (name != null) {
       (await getStore()).dispatch(ActionRenameRepo(repo, name));
     }
+  }
+
+  _gotoFilesPage(BuildContext context, Repo repo) {
+    Navigator.pushNamed(context, '/files', arguments: {
+      'name': repo.name,
+      'path': repo.path
+    });
   }
 
   Widget _buildRepos (BuildContext context) {
@@ -100,7 +107,7 @@ class Repos extends StatelessWidget {
                       ),
                       focusColor: Colors.red,
                       onTap: () {
-                        Navigator.pushNamed(context, '/files');
+                        _gotoFilesPage(context, repo);
                       },
                     ),
                   ),
