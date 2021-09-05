@@ -115,30 +115,22 @@ class Repos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: CupertinoColors.secondarySystemBackground, child: NestedScrollView(
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return [
+    return Container(
+      color: CupertinoColors.secondarySystemBackground,
+      child: CustomScrollView(
+        slivers: [
           CupertinoSliverNavigationBar(
             largeTitle: Text('浏览'),
             backgroundColor: CupertinoColors.secondarySystemBackground.withOpacity(0.5),
             trailing: GestureDetector(onTap: () {
               _addRepo(context);
             }, child: Icon(CupertinoIcons.add_circled))
-          )
-        ];
-      },
-      body: Column(children: [
-        Container(
-          height: MediaQuery.of(context).size.height,
-          child: ListView(
-            children: [
-              Column(
-                children: [ _buildRepos(context) ],
-              )
-            ]
-          )
-        )
-      ]),
-    ));
+          ),
+          SliverList(delegate: SliverChildListDelegate([
+            Container(padding: EdgeInsets.only(top: 30), child: _buildRepos(context))
+          ]))
+        ],
+      )
+    );
   }
 }
