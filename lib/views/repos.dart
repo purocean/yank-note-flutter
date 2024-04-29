@@ -78,23 +78,23 @@ class Repos extends StatelessWidget {
               ),
               child: Column(
                 children: store.state.repos.map((repo) => Slidable(
-                  actionPane: SlidableDrawerActionPane(),
-                  secondaryActions: [
-                    IconSlideAction(
-                      color: CupertinoColors.systemGrey,
-                      icon: CupertinoIcons.ellipsis,
-                      onTap: () => {
-                        _renameRepo(context, repo)
-                      },
-                    ),
-                    IconSlideAction(
-                      color: CupertinoColors.systemRed,
-                      icon: CupertinoIcons.delete,
-                      onTap: () => {
-                        store.dispatch(ActionRemoveRepo(repo))
-                      },
-                    ),
-                  ],
+                  // startActionPane: SlidableDrawerActionPane(),
+                  // secondaryActions: [
+                  //   IconSlideAction(
+                  //     color: CupertinoColors.systemGrey,
+                  //     icon: CupertinoIcons.ellipsis,
+                  //     onTap: () => {
+                  //       _renameRepo(context, repo)
+                  //     },
+                  //   ),
+                  //   IconSlideAction(
+                  //     color: CupertinoColors.systemRed,
+                  //     icon: CupertinoIcons.delete,
+                  //     onTap: () => {
+                  //       store.dispatch(ActionRemoveRepo(repo))
+                  //     },
+                  //   ),
+                  // ],
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 0.5, color: CupertinoColors.separator))),
