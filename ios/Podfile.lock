@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
+  - Toast (4.1.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Toast
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  fluttertoast: e9a18c7be5413da53898f660530c56f35edfba9c
+  Toast: ec33c32b8688982cecc6348adeae667c1b9938da
+
+PODFILE CHECKSUM: 1959d098c91d8a792531a723c4a9d7e9f6a01e38
+
+COCOAPODS: 1.14.3
